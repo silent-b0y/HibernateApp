@@ -3,7 +3,10 @@ package ru.silent_boy;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import ru.silent_boy.model.Item;
 import ru.silent_boy.model.Person;
+
+
 
 /**
  * Hello world!
@@ -12,18 +15,16 @@ import ru.silent_boy.model.Person;
 public class App 
 {
     public static void main( String[] args ) {
-        Configuration configuration = new Configuration().addAnnotatedClass(Person.class);
+        Configuration configuration = new Configuration().addAnnotatedClass(Person.class).addAnnotatedClass(Item.class);
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            Person person1 = new Person("Test1", 30);
-            Person person2 = new Person("Test2", 40);
-            Person person3 = new Person("Test3", 50);
-
-            session.save(person1);
-            session.save(person2);
-            session.save(person3);
+            Person person = session.get(Person.class, 4);
+            Item item = session.get(Item.class, 1);
+            item.getOwner().getItems().remove(item);
+            item.setOwner(person);
+            person.getItems().add(item);
 
             session.getTransaction().commit();
         }
