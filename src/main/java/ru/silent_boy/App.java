@@ -3,10 +3,8 @@ package ru.silent_boy;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import ru.silent_boy.model.Director;
-import ru.silent_boy.model.Item;
-import ru.silent_boy.model.Movie;
-import ru.silent_boy.model.Person;
+import ru.silent_boy.model.*;
+
 
 
 
@@ -21,12 +19,13 @@ public class App
         configuration.addAnnotatedClass(Movie.class);
         configuration.addAnnotatedClass(Person.class);
         configuration.addAnnotatedClass(Item.class);
+        configuration.addAnnotatedClass(Passport.class);
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            Movie movie = session.get(Movie.class, 9);
-            session.remove(movie);
+            Person person = session.get(Person.class, 1);
+            session.remove(person);
 
             session.getTransaction().commit();
         }
