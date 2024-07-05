@@ -5,9 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.silent_boy.model.*;
 
-
-
-
 /**
  * Hello world!
  *
@@ -20,12 +17,13 @@ public class App
         configuration.addAnnotatedClass(Person.class);
         configuration.addAnnotatedClass(Item.class);
         configuration.addAnnotatedClass(Passport.class);
+        configuration.addAnnotatedClass(Principal.class);
+        configuration.addAnnotatedClass(School.class);
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            Person person = session.get(Person.class, 1);
-            session.remove(person);
+
 
             session.getTransaction().commit();
         }
