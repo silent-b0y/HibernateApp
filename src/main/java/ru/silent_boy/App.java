@@ -12,14 +12,18 @@ import ru.silent_boy.model.*;
 public class App 
 {
     public static void main( String[] args ) {
-        Configuration configuration = new Configuration().addAnnotatedClass(Director.class);
+        Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(Movie.class);
         configuration.addAnnotatedClass(Person.class);
         configuration.addAnnotatedClass(Item.class);
         configuration.addAnnotatedClass(Passport.class);
         configuration.addAnnotatedClass(Principal.class);
         configuration.addAnnotatedClass(School.class);
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
+        configuration.addAnnotatedClass(Actor.class);
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+
+        try (sessionFactory) {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
